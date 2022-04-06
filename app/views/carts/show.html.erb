@@ -5,31 +5,35 @@
   </header>
 
   <div class="panel panel-default items">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th colspan="2">Product</th>
-          <th>Unit Price</th>
-          <th>Quantity</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% enhanced_cart.each do |item| %>
-          <%= render 'item', product: item[:product], quantity: item[:quantity].to_i %>
-        <% end %>
-      </tbody>
-      <tfoot>
-        <tr>
-          <th colspan="4">
-            TOTAL:
-          </th>
-          <th>
-            <%= humanized_money_with_symbol (cart_subtotal_cents / 100.0) %>
-          </th>
-        </tr>
-      </tfoot>
-    </table>
+    <% if enhanced_cart.length == 0 %>
+      <h3 style="color: red; font-weight: bold; margin-bottom: 20px; margin-left: 10px;">No items in the cart! <a href="/" style="padding: 2px 5px; text-decoration: none; border: 1px solid black; border-radius: 5px;">Home</a></h3>
+    <% else %>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th colspan="2">Product</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% enhanced_cart.each do |item| %>
+            <%= render 'item', product: item[:product], quantity: item[:quantity].to_i %>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="4">
+              TOTAL:
+            </th>
+            <th>
+              <%= humanized_money_with_symbol (cart_subtotal_cents / 100.0) %>
+            </th>
+          </tr>
+        </tfoot>
+      </table>
+    <% end %>
   </div>
 
   <div class="row">
