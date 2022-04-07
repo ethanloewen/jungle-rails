@@ -6,9 +6,18 @@
 
   <div class="order-summary jumbotron">
     <h4>Thank you for your order!</h4>
+
+    <% total_price = 0.0 %>
     <% @order.line_items.each_with_index do |elm, index| %>
       <%= render "line_item", product: @order.line_items[index].product %>
+      <% total_price +=  @order.line_items[index].product.price %>
     <% end %>
+
+    <div style="border-top: 2px solid black;">
+      <h3 style="display: inline-block;">Email: <%= @order.email %></h3>
+      <h3 style="display: inline-block; float: right;">Total: <%= humanized_money_with_symbol total_price %></h3>
+    </div>
+
   </div>
 
   <%= link_to "Continue Shopping", root_path, class: 'btn btn-lg btn-primary' %>
