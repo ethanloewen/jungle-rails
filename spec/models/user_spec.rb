@@ -35,7 +35,6 @@ RSpec.describe User, type: :model do
           email: 'tester@example.com',
           password: 'pass'
         )
-        puts @new_user.errors.full_messages
         expect(@new_user.errors.full_messages).to eql(["Password confirmation can't be blank"])
       end
     end
@@ -69,8 +68,43 @@ RSpec.describe User, type: :model do
           password: 'pass',
           password_confirmation: 'pass'
         )
-        puts @new_user2.errors.full_messages
         expect(@new_user2.errors.full_messages).to eql(["Email has already been taken"])
+      end
+    end
+
+    context 'without a email field' do
+      it 'returns an error' do
+        @new_user = User.create(
+          first_name: 'First',
+          last_name: 'Last',
+          password: 'pass',
+          password_confirmation: 'pass'
+        )
+        expect(@new_user.errors.full_messages).to eql(["Email can't be blank"])
+      end
+    end
+
+    context 'without a first_name field' do
+      it 'returns an error' do
+        @new_user = User.create(
+          last_name: 'Last',
+          email: 'tester@example.com',
+          password: 'pass',
+          password_confirmation: 'pass'
+        )
+        expect(@new_user.errors.full_messages).to eql(["First name can't be blank"])
+      end
+    end
+
+    context 'without a last_name field' do
+      it 'returns an error' do
+        @new_user = User.create(
+          first_name: 'First',
+          email: 'tester@example.com',
+          password: 'pass',
+          password_confirmation: 'pass'
+        )
+        expect(@new_user.errors.full_messages).to eql(["Last name can't be blank"])
       end
     end
 
