@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Product, type: :model do
   describe 'Validations' do
-    context 'with all required fields filled out' do
+    context 'with all 4 required fields filled out' do
       it 'saves successfully' do
         @new_category = Category.create(name: 'Fridges')
         @new_product = @new_category.products.create(
@@ -14,7 +14,7 @@ RSpec.describe Product, type: :model do
       end
     end
 
-    context 'without a name' do
+    context 'without a name field' do
       it 'returns an error' do
         @new_category = Category.create(name: 'Fridges')
         @new_product = @new_category.products.create(
@@ -25,7 +25,7 @@ RSpec.describe Product, type: :model do
       end
     end
 
-    context 'without a price' do
+    context 'without a price field' do
       it 'returns an error' do
         @new_category = Category.create(name: 'Fridges')
         @new_product = @new_category.products.create(
@@ -36,7 +36,7 @@ RSpec.describe Product, type: :model do
       end
     end
 
-    context 'without a quantity' do
+    context 'without a quantity field' do
       it 'returns an error' do
         @new_category = Category.create(name: 'Fridges')
         @new_product = @new_category.products.create(
@@ -48,7 +48,7 @@ RSpec.describe Product, type: :model do
       end
     end
 
-    context 'without a category' do
+    context 'without a category field' do
       it 'returns an error' do
         @new_product = Product.create(
           name:  'Big Fridge',
