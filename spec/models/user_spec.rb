@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  
   describe 'Validations' do
     context 'with all required fields filled out' do
       it 'successfully creates a user' do
@@ -23,7 +24,7 @@ RSpec.describe User, type: :model do
           email: 'tester@example.com',
           password_confirmation: 'pass'
         )
-        expect(@new_user.errors.full_messages).to eql(["Password can't be blank"])
+        expect(@new_user.errors.full_messages).to include("Password can't be blank")
       end
     end
 
@@ -108,5 +109,60 @@ RSpec.describe User, type: :model do
       end
     end
 
+    context 'with a password less that 4 characters long' do
+      it 'returns an error' do
+        @new_user = User.create(
+          first_name: 'First',
+          last_name: 'Last',
+          email: 'tester@example.com',
+          password: 'bad',
+          password_confirmation: 'bad'
+        )
+        expect(@new_user.errors.full_messages).to eql(["Password is too short (minimum is 4 characters)"])
+      end
+    end
   end
+
+  describe '.authenticate_with_credentials' do
+    context 'with a correct email & password' do
+      it('returns the user successfully') do
+        @new_user = User.create(
+          first_name: 'First',
+          last_name: 'Last',
+          email: 'tester@example.com',
+          password: 'pass',
+          password_confirmation: 'pass'
+        )
+        expect(User.authenticate_with_credentials('tester@example.com', 'pass')).to eql(@new_user)
+      end
+    end
+
+    context 'with an email that does not exist' do
+      it('returns nil') do
+        @new_user = User.create(
+          first_name: 'First',
+          last_name: 'Last',
+          email: 'tester@example.com',
+          password: 'pass',
+          password_confirmation: 'pass'
+        )
+        expect(User.authenticate_with_credentials('new_fake_email@example.com', 'pass')).to eql(nil)
+      end
+    end
+
+    context 'with an incorrect password' do
+      it('returns nil') do
+        @new_user = User.create(
+          first_name: 'First',
+          last_name: 'Last',
+          email: 'tester@example.com',
+          password: 'pass',
+          password_confirmation: 'pass'
+        )
+        expect(User.authenticate_with_credentials('tester@example.com', 'wrong_pass')).to eql(nil)
+      end
+    end
+
+  end
+
 end
