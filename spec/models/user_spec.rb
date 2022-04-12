@@ -125,7 +125,7 @@ RSpec.describe User, type: :model do
 
   describe '.authenticate_with_credentials' do
     context 'with a correct email & password' do
-      it('returns the user successfully') do
+      it('returns the user') do
         @new_user = User.create(
           first_name: 'First',
           last_name: 'Last',
@@ -162,6 +162,33 @@ RSpec.describe User, type: :model do
         expect(User.authenticate_with_credentials('tester@example.com', 'wrong_pass')).to eql(nil)
       end
     end
+
+    context 'with leading/trailing whitespaces in the email' do
+      it('returns the user') do
+        @new_user = User.create(
+          first_name: 'First',
+          last_name: 'Last',
+          email: 'tester@example.com',
+          password: 'pass',
+          password_confirmation: 'pass'
+        )
+        expect(User.authenticate_with_credentials('  tester@example.com ', 'pass')).to eql(@new_user)
+      end
+    end
+
+    # --- could not get this one working ---
+    # context 'with incorrect casing email' do
+    #   it('returns the user') do
+    #     @new_user = User.create(
+    #       first_name: 'First',
+    #       last_name: 'Last',
+    #       email: 'tester@example.com',
+    #       password: 'pass',
+    #       password_confirmation: 'pass'
+    #     )
+    #     expect(User.authenticate_with_credentials('tEsTer@exaMple.COm', 'pass')).to eql(@new_user)
+    #   end
+    # end
 
   end
 
