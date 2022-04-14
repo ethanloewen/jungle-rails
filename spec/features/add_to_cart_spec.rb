@@ -24,6 +24,6 @@ RSpec.feature "Visitor navigates to product page", type: :feature, js: true do
     # DEBUG / VERIFY
     find('.btn-primary .fa-shopping-cart', match: :first).click
     expect(page).to have_content('My Cart (1)')
-    save_screenshot
+    #save_screenshot
   end
 end
