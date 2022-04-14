@@ -1,9 +1,16 @@
 # Jungle
 
+A mini e-commerce application built with Rails 4.2 for purposes of teaching Rails by example.
+
 ## Screenshots
 
+![Home Page](https://github.com/ethanloewen/jungle-rails/blob/master/docs/images/home.png?raw=true)
 
-A mini e-commerce application built with Rails 4.2 for purposes of teaching Rails by example.
+![Registration Page](https://github.com/ethanloewen/jungle-rails/blob/master/docs/images/register.png?raw=true)
+
+![User Checkout Page](https://github.com/ethanloewen/jungle-rails/blob/master/docs/images/checkout.png?raw=true)
+
+![Order Details Page](https://github.com/ethanloewen/jungle-rails/blob/master/docs/images/order_details.png?raw=true)
 
 ## Additional Steps for Apple M1 Machines
 
